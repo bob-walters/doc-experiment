@@ -1,0 +1,36 @@
+@startuml
+title Creation of Ocean Profile from Siebel Profile
+
+actor "End User" as User
+participant "PCL Web Gateway" as UI
+participant "Siebel" as Siebel
+participant "Ocean Auth-Task" as Auth #lightblue
+participant "Ocean OpenAM" as OpenAM #lightblue
+participant "Identity Hub" as UIIH #lightblue
+participant "Guest-Entity" as GE #lightblue
+
+note right of UI: New REST interaction creates ocean profile as mirror of princess profile\nThis call also records the association between the UIID and CCN in identity-hub
+UI->Auth: POST /auth-task/users/fromLoyaltyAccount(email,LoyaltyAccountDetail)
+Auth->UIIH: generate UIID
+UIIH-->Auth: new UIID
+
+note right of Siebel: **PCL:** Siebel Team to verify direct connection with Ocean
+Auth->Siebel: GET profile
+Siebel-->Auth: Current Siebel Profile
+Auth->GE: POST /v1/users/personalDetails
+GE-->Auth: 200
+
+alt if data available
+  Auth->GE: POST /v1/users/addresses
+  GE-->Auth: 200
+end
+
+Auth->UIIH: createRelations(uiid, email)
+UIIH-->Auth: 200
+note right of Auth: This needs to use a specific inference source\nso Princess can find based on it later
+Auth->UIIH: createRelations(uiid, CCN)
+UIIH-->Auth: 200
+Auth-->UI: Success (new UIID)
+UI->Siebel: Set migration successful (UIID)
+
+@enduml
