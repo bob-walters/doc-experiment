@@ -72,7 +72,7 @@ One aspect of the swagger-ui.html app which is under-appreciated is that it can 
 
 For example, here's a link to the petstore.swager.io demo of swagger-ui.html serving the openapi spec that I've checked into this project:
 
-[API specification](https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2Faccesso%2Fentitlement-service%2Fmaster%2Fdocs%2Fapi-definition.yaml%3Ftoken%3DGHSAT0AAAAAACEBG7RARC2PGOM7HMPFVPQUZEN347Q)
+[Petstore API specification served from this Repo](https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbob-walters%2Fdoc-experiment%2Fmain%2Fdocs%2Fapispec.yaml%3Ftoken%3DGHSAT0AAAAAACEBG7RBFGZNZNW7WNZCBH4CZEN22CQ)
 
 The above works even for private projects since it is your browser (i.e. the js code), and not the swagger.io site which is pulling the spec.
 
