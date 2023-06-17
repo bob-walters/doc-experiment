@@ -66,13 +66,30 @@ UI->Siebel: Set migration successful (UIID)
 
 ## OpenAPI Specs
 
+This has been elusive.  
+
 I'm not seeing a good way to embed the swagger-ui.html application directly in the Markdown, but you can have links that show an api spec in your github project in the swagger-ui.html browser app.
 
-One aspect of the swagger-ui.html app which is under-appreciated is that it can be given a URL parameter when served.  That parameter will then be used by the javascript of that app to fetch the swagger from the browser and render it.  This makes it easy to use any hosted instance of swagger-ui to serve an openapi spec in github, you just need to provide the github raw URL of the file as the (url encoded) url parameter to the swagger-ui.htl link.
+The process is not easy, and still looking for a better way.
 
-For example, here's a link to the petstore.swager.io demo of swagger-ui.html serving the openapi spec that I've checked into this project:
+But one approach that works is to copy the swagger-ui.html JS app into your github repo (i.e. into the dist/ directory), and then enable it by turning on github pages.
 
-[Petstore API specification served from this Repo](https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbob-walters%2Fdoc-experiment%2Fmain%2Fdocs%2Fapispec.yaml%3Ftoken%3DGHSAT0AAAAAACEBG7RBFGZNZNW7WNZCBH4CZEN22CQ)
+You'll then end up being able to serve a spec in your repo via a URL link like this:
+
+https://bob-walters.github.io/doc-experiment/index.html?url=docs/apispec.yaml
+
+
+### Notes - other approaches I looked for:
+
+The best answer is ultimately to host a copy of the swagger-ui.html application in a repo using the github pages support, and then use that to serve the specs that may exist in any other repos in your organization.
+
+One aspect of the swagger-ui.html app which is under-appreciated is that it can be given a URL parameter when served.  That parameter will then be used by the javascript of that app to fetch the swagger from the browser and render it.  This makes it easy to use any hosted instance of swagger-ui to serve an openapi spec in github, you just need to provide the github raw URL of the file as the (url encoded) `url` parameter to the `swagger-ui.html` application.
+
+The issue I've run into is that any "raw" link to a file in github includes a token which expires in 10 minutes, so its not possible to create a permanent link that will work in this way.  But if that every changes, you could pass the raw URL of you .yaml spec directly to any hosted instance of the swagger-ui.html app, and it would serve the swagger.
+
+For example:
+
+https://petstore.swagger.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbob-walters%2Fdoc-experiment%2Fmain%2Fdocs%2Fapispec.yaml%3Ftoken%3DGHSAT0AAAAAACEBG7RBFGZNZNW7WNZCBH4CZEN22CQ
 
 The above works even for private projects since it is your browser (i.e. the js code), and not the swagger.io site which is pulling the spec.
 
@@ -80,8 +97,8 @@ An individual or organization could host an instance of swagger-ui.html on some 
 
 Some resources that show how to do this:
 
-* [https://github.com/peter-evans/swagger-github-pages](https://github.com/peter-evans/swagger-github-pages)
-* [https://pguso.medium.com/host-openapi-documentation-with-github-pages-ec16f75e9762](https://pguso.medium.com/host-openapi-documentation-with-github-pages-ec16f75e9762) 
+* https://github.com/peter-evans/swagger-github-pages
+* https://pguso.medium.com/host-openapi-documentation-with-github-pages-ec16f75e9762
 
 The above are all essentially say the same thing:
 
