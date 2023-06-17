@@ -76,7 +76,7 @@ But one approach that works is to copy the swagger-ui.html JS app into your gith
 
 You'll then end up being able to serve a spec in your repo via a URL link like this:
 
-https://bob-walters.github.io/doc-experiment/index.html?url=docs/apispec.yaml
+https://bob-walters.github.io/doc-experiment/
 
 
 ### Notes - other approaches I looked for:
